@@ -1,10 +1,8 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm") version "2.0.21"
 }
 
-group = "me.andrew"
+group = "me.andrewhossan"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -14,6 +12,7 @@ repositories {
 dependencies {
     testImplementation(kotlin("test"))
     implementation(kotlin("test"))
+    testImplementation("junit:junit:4.13.1")
     testImplementation("junit:junit:4.13.1")
 }
 tasks.test {
