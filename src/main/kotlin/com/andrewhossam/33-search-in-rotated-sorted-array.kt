@@ -34,24 +34,24 @@ class `33-search-in-rotated-sorted-array` {
         }
         return -1
     }
+}
 
-    private fun findPivot(nums: IntArray): Int {
-        var start = 0
-        var end = nums.size - 1
-        var pivot = 0
-        while (start <= end) {
-            pivot = (end + start) / 2
+fun findPivot(nums: IntArray): Int {
+    var start = 0
+    var end = nums.size - 1
+    var pivot = 0
+    while (start <= end) {
+        pivot = (end + start) / 2
 
-            if (pivot < end && nums[pivot] > nums[pivot + 1]) {
-                return pivot
-            } else if (pivot > start && nums[pivot] < nums[pivot - 1]) {
-                return pivot - 1
-            } else if (nums[start] > nums[pivot]) {
-                end = pivot - 1
-            } else {
-                start = pivot + 1
-            }
+        if (pivot < end && nums[pivot] > nums[pivot + 1]) {
+            return pivot
+        } else if (pivot > start && nums[pivot] < nums[pivot - 1]) {
+            return pivot - 1
+        } else if (nums[start] > nums[pivot]) {
+            end = pivot - 1
+        } else {
+            start = pivot + 1
         }
-        return pivot
     }
+    return pivot
 }
