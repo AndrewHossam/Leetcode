@@ -15,21 +15,20 @@ fun numberOfSteps(num: Int): Int {
     return steps
 }
 
-fun numberOfSteps2(num: Int): Int {
-    return if (num == 0)
+fun numberOfSteps2(num: Int): Int =
+    if (num == 0) {
         0
-    else if (num % 2 == 0) {
+    } else if (num % 2 == 0) {
         numberOfSteps(num / 2) + 1
     } else {
         numberOfSteps(num - 1) + 1
     }
-}
 
 fun main() {
     println(
-        numberOfSteps(90)
+        numberOfSteps(90),
     )
     println(
-        numberOfSteps2(90)
+        numberOfSteps2(90),
     )
 }

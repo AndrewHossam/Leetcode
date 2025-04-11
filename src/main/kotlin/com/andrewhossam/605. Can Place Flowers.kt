@@ -1,6 +1,9 @@
 package com.andrewhossam
 
-fun canPlaceFlowers(flowerbed: IntArray, n: Int): Boolean {
+fun canPlaceFlowers(
+    flowerbed: IntArray,
+    n: Int,
+): Boolean {
     if (n == 0) return true
     var reminder = n
     for (i in 0 until flowerbed.size) {

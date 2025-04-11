@@ -29,19 +29,20 @@ class `852-peak-index-in-a-mountain-array` {
         }
 
         return highestNumberIndex
-
     }
 
-    fun binarySearch(arr: IntArray, target: Int): Int {
-
+    fun binarySearch(
+        arr: IntArray,
+        target: Int,
+    ): Int {
         var start = 0
         var end = arr.size - 1
 
         while (start <= end) {
             val mid = start + (end - start) / 2
-            if (arr[mid] == target)
+            if (arr[mid] == target) {
                 return mid
-            else if (target > arr[mid]) {
+            } else if (target > arr[mid]) {
                 start = mid + 1
             } else {
                 end = mid - 1

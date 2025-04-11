@@ -20,7 +20,8 @@ fun sortedSquares(nums: IntArray): IntArray {
         var negativeIndex = positiveIndex
         for (n in 0 until nums.size) {
             if (
-                negativeIndex != 0 && positiveIndex != nums.size - 1 &&
+                negativeIndex != 0 &&
+                positiveIndex != nums.size - 1 &&
                 nums[negativeIndex - 1].square() > nums[positiveIndex + 1].square()
             ) {
                 result.add(nums[++positiveIndex].square())
@@ -33,8 +34,9 @@ fun sortedSquares(nums: IntArray): IntArray {
 }
 
 fun Int.square() = this * this
+
 fun main() {
     println(
-        sortedSquares(intArrayOf(-4, -1, 0, 3, 10))
+        sortedSquares(intArrayOf(-4, -1, 0, 3, 10)),
     )
 }

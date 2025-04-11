@@ -1,11 +1,15 @@
 package com.andrewhossam
 
-fun kidsWithCandies(candies: IntArray, extraCandies: Int): List<Boolean> {
+fun kidsWithCandies(
+    candies: IntArray,
+    extraCandies: Int,
+): List<Boolean> {
     val list = mutableListOf<Boolean>()
     var max = 0
     for (candy in candies) {
-        if (max < candy)
+        if (max < candy) {
             max = candy
+        }
     }
 
     for (candy in candies) {

@@ -20,20 +20,20 @@ fun isPalindrome(s: String): Boolean {
     return true
 }
 
-fun Char.isValidChar(): Boolean {
-    return (toInt() >= 'A'.toInt() && toInt() <= 'Z'.toInt()) ||
-            (toInt() >= 'a'.toInt() && toInt() <= 'z'.toInt()) ||
-            (toInt() >= '0'.toInt() && toInt() <= '9'.toInt())
-}
+fun Char.isValidChar(): Boolean =
+    (toInt() >= 'A'.toInt() && toInt() <= 'Z'.toInt()) ||
+        (toInt() >= 'a'.toInt() && toInt() <= 'z'.toInt()) ||
+        (toInt() >= '0'.toInt() && toInt() <= '9'.toInt())
 
-fun Char.toLowerCase(): Char {
-    return if ((toInt() >= 'A'.toInt() && toInt() <= 'Z'.toInt())) {
+fun Char.toLowerCase(): Char =
+    if ((toInt() >= 'A'.toInt() && toInt() <= 'Z'.toInt())) {
         (this.toInt() + 32).toChar()
-    } else this
-}
+    } else {
+        this
+    }
 
 fun main() {
     print(
-        isPalindrome("a")
+        isPalindrome("a"),
     )
 }

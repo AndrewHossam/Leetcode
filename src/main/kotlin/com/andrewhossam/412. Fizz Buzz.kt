@@ -36,6 +36,6 @@ fun fizzBuzz2(n: Int): List<String> {
 
 fun main() {
     println(
-        fizzBuzz2(15).toString()
+        fizzBuzz2(15).toString(),
     )
 }

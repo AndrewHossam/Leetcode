@@ -1,12 +1,16 @@
 package com.andrewhossam
 
 class `find-smallest-letter-greater-than-target-744` {
-    fun nextGreatestLetter(letters: CharArray, target: Char): Char {
+    fun nextGreatestLetter(
+        letters: CharArray,
+        target: Char,
+    ): Char {
         var start = 0
         var end = letters.size - 1
 
-        if (target >= letters.last())
+        if (target >= letters.last()) {
             return letters.first()
+        }
 
         while (start <= end) {
             val center = start + (end - start) / 2
@@ -17,6 +21,5 @@ class `find-smallest-letter-greater-than-target-744` {
             }
         }
         return letters[start]
-
     }
 }

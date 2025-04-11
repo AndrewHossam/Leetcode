@@ -21,6 +21,6 @@ fun runningSum2(nums: IntArray): IntArray {
 
 fun main() {
     println(
-        runningSum2(intArrayOf(1, 1, 1, 1, 1)).contentToString()
+        runningSum2(intArrayOf(1, 1, 1, 1, 1)).contentToString(),
     )
 }

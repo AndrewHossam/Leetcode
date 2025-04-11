@@ -3,7 +3,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class `find-smallest-letter-greater-than-target-744Test` {
-
     val sut = `find-smallest-letter-greater-than-target-744`()
 
     @Test
@@ -11,8 +10,9 @@ class `find-smallest-letter-greater-than-target-744Test` {
         assertEquals(
             'c',
             sut.nextGreatestLetter(
-                charArrayOf('c', 'f', 'j'), 'a',
-            )
+                charArrayOf('c', 'f', 'j'),
+                'a',
+            ),
         )
     }
 
@@ -21,8 +21,9 @@ class `find-smallest-letter-greater-than-target-744Test` {
         assertEquals(
             'f',
             sut.nextGreatestLetter(
-                charArrayOf('c', 'f', 'j'), 'c',
-            )
+                charArrayOf('c', 'f', 'j'),
+                'c',
+            ),
         )
     }
 
@@ -31,17 +32,20 @@ class `find-smallest-letter-greater-than-target-744Test` {
         assertEquals(
             'x',
             sut.nextGreatestLetter(
-                charArrayOf('x', 'x', 'y', 'y'), 'z',
-            )
+                charArrayOf('x', 'x', 'y', 'y'),
+                'z',
+            ),
         )
     }
+
     @Test
     fun case4() {
         assertEquals(
             'c',
             sut.nextGreatestLetter(
-                charArrayOf('c', 'f', 'j'), 'j',
-            )
+                charArrayOf('c', 'f', 'j'),
+                'j',
+            ),
         )
     }
 }

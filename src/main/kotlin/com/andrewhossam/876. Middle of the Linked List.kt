@@ -9,11 +9,12 @@ package com.andrewhossam
  *     var next: ListNode? = null
  * }
  */
-class ListNode(var `val`: Int) {
+class ListNode(
+    var `val`: Int,
+) {
     var next: ListNode? = null
-    override fun toString(): String {
-        return "$`val`"
-    }
+
+    override fun toString(): String = "$`val`"
 }
 
 fun middleNode(head: ListNode?): ListNode {
@@ -24,7 +25,6 @@ fun middleNode(head: ListNode?): ListNode {
         current = current.next
     }
     return list[list.size / 2]
-
 }
 
 fun middleNode2(head: ListNode?): ListNode? {
@@ -47,22 +47,26 @@ fun main() {
     println(
         middleNode(
             ListNode(1).also {
-                it.next = ListNode(
-                    2
-                ).also {
-                    it.next = ListNode(
-                        3
+                it.next =
+                    ListNode(
+                        2,
                     ).also {
-                        it.next = ListNode(
-                            4
-                        ).also {
-                            it.next = ListNode(
-                                5
-                            )
-                        }
+                        it.next =
+                            ListNode(
+                                3,
+                            ).also {
+                                it.next =
+                                    ListNode(
+                                        4,
+                                    ).also {
+                                        it.next =
+                                            ListNode(
+                                                5,
+                                            )
+                                    }
+                            }
                     }
-                }
-            }
-        )
+            },
+        ),
     )
 }

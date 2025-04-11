@@ -2,7 +2,7 @@ package com.andrewhossam
 
 import java.util.*
 
-class MinStack() {
+class MinStack {
     private val q = Stack<StackItem>()
     private var minSoFar = Int.MAX_VALUE
 
@@ -12,18 +12,19 @@ class MinStack() {
         }
 
         q.push(
-            StackItem(`val`, minSoFar)
+            StackItem(`val`, minSoFar),
         )
         println("Push:$`val`, min: $minSoFar")
     }
 
     fun pop() {
         q.pop()
-        minSoFar = if (q.isEmpty()) {
-            Int.MAX_VALUE
-        } else {
-            q.peek().minSoFar
-        }
+        minSoFar =
+            if (q.isEmpty()) {
+                Int.MAX_VALUE
+            } else {
+                q.peek().minSoFar
+            }
         try {
             println("pop:${q.peek().`val`}`, min: $minSoFar")
         } catch (e: Exception) {
@@ -39,7 +40,6 @@ class MinStack() {
         println("getMin:${q.peek().`val`}`, min: $minSoFar")
         return q.peek().minSoFar
     }
-
 }
 
 fun main() {
@@ -65,4 +65,7 @@ fun main() {
     }
 }
 
-data class StackItem(val `val`: Int, val minSoFar: Int)
+data class StackItem(
+    val `val`: Int,
+    val minSoFar: Int,
+)

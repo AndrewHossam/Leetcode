@@ -14,21 +14,16 @@ fun evalRPN(tokens: Array<String>): Int {
                 val second = queue.pop()
                 val first = queue.pop()
                 queue.add(first - second)
-
-
             }
 
             "*" -> {
                 queue.add(queue.pop() * queue.pop())
-
             }
 
             "/" -> {
                 val second = queue.pop()
                 val first = queue.pop()
                 queue.add(first / second)
-
-
             }
 
             else -> {

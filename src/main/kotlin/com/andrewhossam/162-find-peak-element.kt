@@ -17,6 +17,5 @@ class `162-find-peak-element` {
             }
         }
         return start
-
     }
 }

@@ -3,12 +3,12 @@ package com.andrewhossam
 fun main() {
     println(
         maxProfit(
-            intArrayOf(7, 1, 5, 3, 6, 4)
-        )
+            intArrayOf(7, 1, 5, 3, 6, 4),
+        ),
     )
 }
 
-//[7,1,5,3,6,4]
+// [7,1,5,3,6,4]
 
 /*
         [0,-6,,-2,-4.-1,-3]
@@ -22,7 +22,7 @@ fun maxProfit(prices: IntArray): Int {
     val profits = intArrayOf()
     for (i in 0 until prices.size) {
         val current = prices[i]
-        (i .. prices.size).forEach { j ->
+        (i..prices.size).forEach { j ->
             //            profits[i][j] = current - prices[j]
         }
         println(profits[i])

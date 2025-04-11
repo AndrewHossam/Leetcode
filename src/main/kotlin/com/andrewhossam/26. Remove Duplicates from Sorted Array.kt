@@ -3,8 +3,8 @@ package com.andrewhossam
 fun main() {
     println(
         removeDuplicates(
-            intArrayOf(1, 1, 2)
-        )
+            intArrayOf(1, 1, 2),
+        ),
     )
 }
 

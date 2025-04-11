@@ -26,9 +26,9 @@ fun main(args: Array<String>) {
     var b = 20
     var c = 30
 
-    a = a + b + c - a- b
+    a = a + b + c - a - b
 
     println(
-        "a = ${a}, b = ${b}, c = ${c}\n"
+        "a = $a, b = $b, c = ${c}\n",
     )
 }

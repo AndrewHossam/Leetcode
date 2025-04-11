@@ -1,6 +1,9 @@
 package com.andrewhossam
 
-fun canConstruct(ransomNote: String, magazine: String): Boolean {
+fun canConstruct(
+    ransomNote: String,
+    magazine: String,
+): Boolean {
     val map = mutableMapOf<Char, Int>()
     magazine.forEach {
         map[it] = (map[it] ?: 0) + 1
@@ -18,6 +21,6 @@ fun canConstruct(ransomNote: String, magazine: String): Boolean {
 
 fun main() {
     println(
-        canConstruct("aa", "aab")
+        canConstruct("aa", "aab"),
     )
 }

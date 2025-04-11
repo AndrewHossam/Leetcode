@@ -1,6 +1,9 @@
 package com.andrewhossam
 
-fun isAnagram(s: String, t: String): Boolean {
+fun isAnagram(
+    s: String,
+    t: String,
+): Boolean {
     if (s.length != t.length) return false
     val map1 = mutableMapOf<Char, Int>()
     val map2 = mutableMapOf<Char, Int>()
@@ -10,14 +13,15 @@ fun isAnagram(s: String, t: String): Boolean {
     }
 
     s.forEach {
-        if (map1[it] != map2[it])
+        if (map1[it] != map2[it]) {
             return false
+        }
     }
     return true
 }
 
 fun main() {
     println(
-        isAnagram("rat", "car")
+        isAnagram("rat", "car"),
     )
 }

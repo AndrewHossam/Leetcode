@@ -1,8 +1,6 @@
 package com.andrewhossam
 
-import java.util.LinkedList
-import java.util.Queue
-import java.util.Stack
+import java.util.*
 
 fun isValid(s: String): Boolean {
     val q: Stack<Char> = Stack()
@@ -13,7 +11,7 @@ fun isValid(s: String): Boolean {
             c == '['
         ) {
             q.add(c)
-        } else if (q.isEmpty()){
+        } else if (q.isEmpty()) {
             return false
         } else if (
             (c == ')' && '(' == q.peek()) ||
@@ -21,13 +19,15 @@ fun isValid(s: String): Boolean {
             (c == ']' && '[' == q.peek())
         ) {
             q.pop()
-        } else return false
+        } else {
+            return false
+        }
     }
     return q.isEmpty()
 }
 
 fun main() {
     println(
-        com.andrewhossam.isValid("]")
+        com.andrewhossam.isValid("]"),
     )
 }

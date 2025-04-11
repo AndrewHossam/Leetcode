@@ -8,13 +8,14 @@ fun sortArrayByParity(nums: IntArray): IntArray {
     val list = mutableListOf<Int>()
 
     for (num in nums) {
-        if (num % 2 == 0)
+        if (num % 2 == 0) {
             list.add(num)
+        }
     }
     for (num in nums) {
-        if (num % 2 != 0)
+        if (num % 2 != 0) {
             list.add(num)
+        }
     }
     return list.toIntArray()
 }
-

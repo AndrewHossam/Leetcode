@@ -1,14 +1,16 @@
 package com.andrewhossam
 
-data class TreeNode(var `val`: Int) {
+data class TreeNode(
+    var `val`: Int,
+) {
     var left: TreeNode? = null
     var right: TreeNode? = null
 }
 
-
 fun invertTree(root: TreeNode?): TreeNode? {
-    if (root == null) return null
-    else {
+    if (root == null) {
+        return null
+    } else {
         swap(root)
         invertTree(root.left)
         invertTree(root.right)
@@ -23,11 +25,12 @@ fun swap(root: TreeNode) {
 }
 
 fun main() {
-    val input = TreeNode(2).apply {
-        left = TreeNode(1)
-        right = TreeNode(3)
-    }
+    val input =
+        TreeNode(2).apply {
+            left = TreeNode(1)
+            right = TreeNode(3)
+        }
     println(
-        invertTree(input)
+        invertTree(input),
     )
 }

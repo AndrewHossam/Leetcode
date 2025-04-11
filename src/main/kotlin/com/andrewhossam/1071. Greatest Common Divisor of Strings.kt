@@ -1,10 +1,14 @@
 package com.andrewhossam
 
-fun gcdOfStrings(str1: String, str2: String): String {
+fun gcdOfStrings(
+    str1: String,
+    str2: String,
+): String {
     var longestCommon = str2
     while (longestCommon.isNotEmpty()) {
         if (
-            str1.length % longestCommon.length == 0 && str2.length % longestCommon.length == 0 &&
+            str1.length % longestCommon.length == 0 &&
+            str2.length % longestCommon.length == 0 &&
             longestCommon.times(str1.length / longestCommon.length) == str1 &&
             longestCommon.times(str2.length / longestCommon.length) == str2
         ) {
@@ -26,6 +30,6 @@ private fun String.times(times: Int): String {
 
 fun main() {
     println(
-        gcdOfStrings("ABCABC", "AC")
+        gcdOfStrings("ABCABC", "AC"),
     )
 }
