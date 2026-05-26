@@ -1,4 +1,4 @@
-package com.andrewhossam.com.andrewhossam
+package com.andrewhossam
 
 // [2,3,5,9,14,16,18] target = 15
 class SealingOfNumber {

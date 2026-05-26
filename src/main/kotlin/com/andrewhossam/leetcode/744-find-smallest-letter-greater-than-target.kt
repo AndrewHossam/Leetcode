@@ -1,6 +1,6 @@
 package com.andrewhossam.leetcode
 
-class `find-smallest-letter-greater-than-target-744` {
+class `744-find-smallest-letter-greater-than-target` {
     fun nextGreatestLetter(
         letters: CharArray,
         target: Char,
