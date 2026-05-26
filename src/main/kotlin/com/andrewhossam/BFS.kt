@@ -1,4 +1,4 @@
-package com.andrewhossam
+package com.andrewhossam.leetcode
 
 import java.util.*
 

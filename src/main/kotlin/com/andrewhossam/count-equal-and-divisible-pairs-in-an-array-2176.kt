@@ -1,4 +1,4 @@
-package com.andrewhossam
+package com.andrewhossam.leetcode
 
 class `count-equal-and-divisible-pairs-in-an-array-2176` {
     // Input: nums = [3,1,2,2,2,1,3], k = 2

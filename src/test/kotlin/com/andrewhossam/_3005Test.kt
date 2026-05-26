@@ -1,4 +1,4 @@
-package com.andrewhossam
+package com.andrewhossam.leetcode
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

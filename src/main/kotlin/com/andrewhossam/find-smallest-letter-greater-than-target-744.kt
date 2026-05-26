@@ -1,4 +1,4 @@
-package com.andrewhossam
+package com.andrewhossam.leetcode
 
 class `find-smallest-letter-greater-than-target-744` {
     fun nextGreatestLetter(
