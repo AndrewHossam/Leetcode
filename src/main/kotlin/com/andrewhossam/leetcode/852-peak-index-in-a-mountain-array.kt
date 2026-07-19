@@ -1,5 +1,8 @@
 package com.andrewhossam.leetcode
 
+// 852. Peak Index in a Mountain Array
+// https://leetcode.com/problems/peak-index-in-a-mountain-array/
+
 class `852-peak-index-in-a-mountain-array` {
     fun peakIndexInMountainArray(arr: IntArray): Int {
         var start = 0

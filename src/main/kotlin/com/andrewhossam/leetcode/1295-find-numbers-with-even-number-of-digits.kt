@@ -1,8 +1,10 @@
 package com.andrewhossam.leetcode
-
 import kotlin.math.log10
 
-class `find-numbers-with-even-number-of-digits-1295` {
+// 1295. Find Numbers with Even Number of Digits
+// https://leetcode.com/problems/find-numbers-with-even-number-of-digits/
+
+class `1295-find-numbers-with-even-number-of-digits` {
     fun bruteForce(nums: IntArray): Int = nums.count { it.toString().length % 2 == 0 }
 
     fun findNumbers(nums: IntArray): Int {

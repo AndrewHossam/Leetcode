@@ -1,0 +1,37 @@
+package com.andrewhossam.leetcode
+import java.util.*
+
+// 20. Valid Parentheses
+// https://leetcode.com/problems/valid-parentheses/
+
+class `20-valid-parentheses` {
+    fun isValid(s: String): Boolean {
+        val q: Stack<Char> = Stack()
+        for (c in s) {
+            if (
+                c == '(' ||
+                c == '{' ||
+                c == '['
+            ) {
+                q.add(c)
+            } else if (q.isEmpty()) {
+                return false
+            } else if (
+                (c == ')' && '(' == q.peek()) ||
+                (c == '}' && '{' == q.peek()) ||
+                (c == ']' && '[' == q.peek())
+            ) {
+                q.pop()
+            } else {
+                return false
+            }
+        }
+        return q.isEmpty()
+    }
+
+    fun main() {
+        println(
+            isValid("]"),
+        )
+    }
+}
