@@ -1,0 +1,117 @@
+#!/usr/bin/env bash
+# lc [--force|-f] <number> [slug]  — scaffold a LeetCode problem into this repo.
+# Fetches the title-slug + title from LeetCode's public problems list (cached
+# 7 days in ~/.cache). Pass a slug arg to skip the fetch (offline / override).
+# --force: refresh the main file ONLY if it's still the untouched solve() stub;
+#          a file with any real code is left alone (never eats a solution).
+set -euo pipefail
+
+# ponytail: resolve repo root by walking up for build.gradle.kts — never assume cwd
+root="$PWD"
+while [ "$root" != "/" ] && [ ! -f "$root/build.gradle.kts" ]; do
+  root="$(dirname "$root")"
+done
+[ -f "$root/build.gradle.kts" ] || { echo "error: run from inside the Leetcode repo"; exit 1; }
+
+# ponytail: pull --force/-f out of any position; leave the rest as positionals
+force=0
+positionals=()
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --force|-f) force=1 ;;
+    *) positionals+=("$1") ;;
+  esac
+  shift
+done
+num="${positionals[0]:?usage: lc [--force] <problem-number> [slug]}"
+slug="${positionals[1]:-}"
+title=""
+
+if [ -z "$slug" ]; then
+  cache="$HOME/.cache/leetcode/problems.json"
+  mkdir -p "$(dirname "$cache")"
+  need=1
+  if [ -f "$cache" ]; then
+    age=$(( ( $(date +%s) - $(stat -f %m "$cache") ) / 86400 ))   # BSD stat (macOS)
+    [ "$age" -lt 7 ] && need=0
+  fi
+  if [ "$need" -eq 1 ]; then
+    echo "fetching LeetCode problem list…"
+    tmp="$(mktemp)"
+    if curl -fsS --max-time 20 "https://leetcode.com/api/problems/all/" -o "$tmp"; then
+      mv "$tmp" "$cache"
+    else
+      rm -f "$tmp"
+      [ -f "$cache" ] || { echo "error: offline and no cache — pass slug: lc $num <slug>"; exit 1; }
+    fi
+  fi
+  read -r slug title < <(jq -r --argjson n "$num" \
+    '.stat_status_pairs[] | select(.stat.frontend_question_id==$n) | "\(.stat.question__title_slug)\t\(.stat.question__title)"' "$cache")
+  [ -n "$slug" ] || { echo "error: problem $num not found — check the number or pass slug"; exit 1; }
+fi
+
+main_dir="$root/src/main/kotlin/com/andrewhossam/leetcode"
+test_dir="$root/src/test/kotlin/com/andrewhossam/leetcode"
+main_file="$main_dir/$num-$slug.kt"
+test_file="$test_dir/$num-${slug}Test.kt"
+
+# decide whether to write the main file:
+#   force + still the untouched generic stub (fun solve() / TODO("implement")) -> refresh
+#   exists and not force (or already has real code)                              -> skip
+main_action=""
+if [ -f "$main_file" ]; then
+  if [ "$force" -eq 1 ] && grep -q 'fun solve()' "$main_file" && grep -q 'TODO("implement")' "$main_file"; then
+    main_action="refresh"
+  else
+    echo "exists, skipping: ${main_file#$root/}"
+    main_action="skip"
+  fi
+fi
+
+if [ "$main_action" != "skip" ]; then
+  mkdir -p "$main_dir"
+
+  # best-effort: pull LeetCode's Kotlin code stub and rewrite the placeholder
+  # class name to ours. Falls back to a generic solve() stub on any failure.
+  payload=$(jq -nc --arg slug "$slug" \
+    '{query: ("query{question(titleSlug:\"" + $slug + "\"){codeSnippets{lang code}}}"), variables: {}}')
+  snippet=$(printf '%s' "$payload" \
+    | curl -s --max-time 15 -X POST https://leetcode.com/graphql -H "content-type: application/json" -d @- \
+    | jq -r '.data.question.codeSnippets[]? | select(.lang=="Kotlin") | .code' 2>/dev/null || true)
+
+  if [ -n "$snippet" ]; then
+    body=$(printf '%s\n' "$snippet" | sed -E "1s/^class [A-Za-z0-9_]+/class \`$num-$slug\`/")
+  fi
+  if [ -z "${body:-}" ] || ! printf '%s' "$body" | grep -q "^class \`$num-$slug\`"; then
+    body=$(printf 'class `%s-%s` {\n    fun solve() {\n        TODO("implement")\n    }\n}' "$num" "$slug")
+  fi
+
+  {
+    printf 'package com.andrewhossam.leetcode\n\n'
+    [ -n "$title" ] && printf '// %s. %s\n' "$num" "$title"
+    printf '// https://leetcode.com/problems/%s/\n' "$slug"
+    printf '%s\n' "$body"
+  } > "$main_file"
+  [ "$main_action" = "refresh" ] && echo "refreshed: ${main_file#$root/}" || echo "created: ${main_file#$root/}"
+fi
+
+if [ -f "$test_file" ]; then
+  echo "exists, skipping: ${test_file#$root/}"
+else
+  mkdir -p "$test_dir"
+  cat > "$test_file" <<EOF
+package com.andrewhossam.leetcode
+
+import kotlin.test.Test
+
+class \`$num-${slug}Test\` {
+    val sut = \`$num-$slug\`()
+
+    @Test
+    fun case1() {
+        TODO("copy first example from leetcode")
+    }
+}
+EOF
+  echo "created: ${test_file#$root/}"
+fi
