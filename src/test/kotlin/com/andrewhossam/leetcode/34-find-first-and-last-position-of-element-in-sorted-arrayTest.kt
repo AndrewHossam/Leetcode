@@ -1,8 +1,9 @@
-import com.andrewhossam.`34-find-first-and-last-position-of-element-in-sorted-array`
+package com.andrewhossam.leetcode
+
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 
-class `34Test` {
+class `34-find-first-and-last-position-of-element-in-sorted-arrayTest` {
     val sut = `34-find-first-and-last-position-of-element-in-sorted-array`()
 
     @Test

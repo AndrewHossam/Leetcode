@@ -3,7 +3,7 @@ package com.andrewhossam.leetcode
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class `33Test` {
+class `33-search-in-rotated-sorted-arrayTest` {
     val sut = `33-search-in-rotated-sorted-array`()
 
     @Test

@@ -1,5 +1,5 @@
-import com.andrewhossam.`1095-find-in-mountain-array`
-import com.andrewhossam.MountainArray
+package com.andrewhossam.leetcode
+
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

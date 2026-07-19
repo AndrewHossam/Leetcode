@@ -3,12 +3,14 @@ package com.andrewhossam.leetcode
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class _3005Test {
+class `3005-count-elements-with-maximum-frequencyTest` {
+    val sut = `3005-count-elements-with-maximum-frequency`()
+
     @Test
     fun test1() {
         assertEquals(
             4,
-            maxFrequencyElements(
+            sut.maxFrequencyElements(
                 intArrayOf(1, 2, 2, 3, 1, 4),
             ),
         )
@@ -18,7 +20,7 @@ class _3005Test {
     fun test2() {
         assertEquals(
             5,
-            maxFrequencyElements(
+            sut.maxFrequencyElements(
                 intArrayOf(1, 2, 3, 4, 5),
             ),
         )
@@ -28,7 +30,7 @@ class _3005Test {
     fun test15() {
         assertEquals(
             1,
-            maxFrequencyElements(
+            sut.maxFrequencyElements(
                 intArrayOf(15),
             ),
         )

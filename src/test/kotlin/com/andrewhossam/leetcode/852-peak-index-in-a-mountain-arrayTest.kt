@@ -1,4 +1,5 @@
-import com.andrewhossam.`852-peak-index-in-a-mountain-array`
+package com.andrewhossam.leetcode
+
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

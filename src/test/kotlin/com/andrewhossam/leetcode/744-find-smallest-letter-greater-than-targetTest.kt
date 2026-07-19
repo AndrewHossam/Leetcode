@@ -1,9 +1,10 @@
-import com.andrewhossam.`find-smallest-letter-greater-than-target-744`
+package com.andrewhossam.leetcode
+
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class `find-smallest-letter-greater-than-target-744Test` {
-    val sut = `find-smallest-letter-greater-than-target-744`()
+class `744-find-smallest-letter-greater-than-targetTest` {
+    val sut = `744-find-smallest-letter-greater-than-target`()
 
     @Test
     fun case1() {

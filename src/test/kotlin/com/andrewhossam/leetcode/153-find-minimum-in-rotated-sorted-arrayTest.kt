@@ -3,8 +3,8 @@ package com.andrewhossam.leetcode
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class `115Cases` {
-    val sut = `115-find-minimum-in-rotated-sorted-array`()
+class `153-find-minimum-in-rotated-sorted-arrayTest` {
+    val sut = `153-find-minimum-in-rotated-sorted-array`()
 
     @Test
     fun case1() {
