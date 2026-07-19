@@ -81,6 +81,8 @@ if [ "$main_action" != "skip" ]; then
 
   if [ -n "$snippet" ]; then
     body=$(printf '%s\n' "$snippet" | sed -E "1s/^class [A-Za-z0-9_]+/class \`$num-$slug\`/")
+    # fill empty method bodies so the file compiles before it's implemented
+    body=$(printf '%s\n' "$body" | sed -E 's/^[[:space:]]+$/        return TODO("implement")/')
   fi
   if [ -z "${body:-}" ] || ! printf '%s' "$body" | grep -q "^class \`$num-$slug\`"; then
     body=$(printf 'class `%s-%s` {\n    fun solve() {\n        TODO("implement")\n    }\n}' "$num" "$slug")
@@ -99,18 +101,26 @@ if [ -f "$test_file" ]; then
   echo "exists, skipping: ${test_file#$root/}"
 else
   mkdir -p "$test_dir"
+  # best-effort: pull LeetCode's example cases (inputs + expected outputs) and
+  # build real assertEquals/assertContentEquals calls. gen_cases.py prints
+  # nothing on any uncertainty (complex types, multi-method, parse fail) so we
+  # fall back to a single TODO stub — the file always compiles.
+  cases="$(python3 "$root/scripts/gen_cases.py" "$slug" 2>/dev/null || true)"
+  [ -z "$cases" ] && cases='    @Test
+    fun case1() {
+        TODO("copy first example from leetcode")
+    }'
   cat > "$test_file" <<EOF
 package com.andrewhossam.leetcode
 
 import kotlin.test.Test
+import kotlin.test.assertContentEquals
+import kotlin.test.assertEquals
 
 class \`$num-${slug}Test\` {
     val sut = \`$num-$slug\`()
 
-    @Test
-    fun case1() {
-        TODO("copy first example from leetcode")
-    }
+$cases
 }
 EOF
   echo "created: ${test_file#$root/}"
