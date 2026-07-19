@@ -59,24 +59,56 @@ def parse_sig(code):
     return name, types, ret
 
 
+# zero-width / format Unicode that LeetCode's HTML sometimes inserts into Output lines.
+# Built from codepoints so the source stays pure ASCII.
+_ZW = re.compile("[" + re.escape("".join(chr(c) for c in range(0x200B, 0x2030)) + chr(0xFEFF)) + "]")
+
+
 def conv(typ, val):
-    """Convert a LeetCode literal string to a Kotlin literal by type, or None."""
+    """Convert a LeetCode literal string to a Kotlin literal by type, or None.
+    Validates strictly: a dirty/ambiguous value (e.g. an Output line with
+    trailing explanation, or zero-width chars) returns None so the caller
+    falls back to expected = TODO(...) instead of emitting broken Kotlin."""
     typ = typ.replace("?", "").strip()
-    val = val.strip()
-    if typ in ("Int", "Long", "Boolean"):
-        return val
+    val = _ZW.sub("", val).strip()
+    if typ in ("Int", "Long"):
+        return val if re.fullmatch(r"-?\d+", val) else None
+    if typ == "Boolean":
+        return val if re.fullmatch(r"true|false", val) else None
     if typ == "Char":
-        return "'" + val.strip("'\"") + "'"
+        v = val.strip("'\"")
+        return "'" + v + "'" if len(v) == 1 else None
     if typ == "String":
-        return val if (val.startswith('"') and val.endswith('"')) else '"' + val + '"'
+        if re.fullmatch(r'"[^"]*"', val):
+            return val
+        if re.fullmatch(r"\S+", val):
+            return '"' + val + '"'
+        return None
     if typ == "IntArray":
-        inner = val[1:-1].strip() if val.startswith("[") and val.endswith("]") else val
-        return "intArrayOf(" + inner + ")"
+        if re.fullmatch(r"\[[^\]]*\]", val):
+            return "intArrayOf(" + val[1:-1].strip() + ")"
+        return None
     if typ == "Array<IntArray>":
-        if not (val.startswith("[[") and val.endswith("]]")):
+        if re.fullmatch(r"\[\[.*\]\]", val):
+            rows = re.findall(r"\[[^\]]*\]", val[1:-1])
+            return "arrayOf(" + ", ".join("intArrayOf(" + r[1:-1].strip() + ")" for r in rows) + ")"
+        return None
+    if typ == "Array<String>":
+        items = re.findall(r'"[^"]*"', val)
+        return "arrayOf(" + ", ".join(items) + ")" if (val.startswith("[") and val.endswith("]") and items) else None
+    if typ.startswith("List<"):
+        elem = typ[5:-1].strip()
+        if not (val.startswith("[") and val.endswith("]")):
             return None
-        rows = re.findall(r"\[[^\]]*\]", val[1:-1])
-        return "arrayOf(" + ", ".join("intArrayOf(" + r[1:-1].strip() + ")" for r in rows) + ")"
+        inner = val[1:-1].strip()
+        parts = [p.strip() for p in inner.split(",")] if inner else []
+        out = []
+        for p in parts:
+            c = conv(elem, p)
+            if c is None:
+                return None
+            out.append(c)
+        return "listOf(" + ", ".join(out) + ")"
     return None
 
 
@@ -92,7 +124,7 @@ def main():
     try:
         q = fetch(slug)
     except Exception:
-        return  # network/API failure → silent fallback
+        return  # network/API failure -> silent fallback
 
     sig = parse_sig(next((s["code"] for s in (q.get("codeSnippets") or []) if s["lang"] == "Kotlin"), ""))
     if not sig:

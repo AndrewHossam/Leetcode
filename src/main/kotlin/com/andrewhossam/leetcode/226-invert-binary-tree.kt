@@ -10,30 +10,32 @@ data class TreeNode(
     var right: TreeNode? = null
 }
 
-fun invertTree(root: TreeNode?): TreeNode? {
-    if (root == null) {
-        return null
-    } else {
-        swap(root)
-        invertTree(root.left)
-        invertTree(root.right)
-    }
-    return root
-}
-
-fun swap(root: TreeNode) {
-    val temp = root.left
-    root.left = root.right
-    root.right = temp
-}
-
-fun main() {
-    val input =
-        TreeNode(2).apply {
-            left = TreeNode(1)
-            right = TreeNode(3)
+class `226-invert-binary-tree` {
+    fun invertTree(root: TreeNode?): TreeNode? {
+        if (root == null) {
+            return null
+        } else {
+            swap(root)
+            invertTree(root.left)
+            invertTree(root.right)
         }
-    println(
-        invertTree(input),
-    )
+        return root
+    }
+
+    fun swap(root: TreeNode) {
+        val temp = root.left
+        root.left = root.right
+        root.right = temp
+    }
+
+    fun main() {
+        val input =
+            TreeNode(2).apply {
+                left = TreeNode(1)
+                right = TreeNode(3)
+            }
+        println(
+            invertTree(input),
+        )
+    }
 }
